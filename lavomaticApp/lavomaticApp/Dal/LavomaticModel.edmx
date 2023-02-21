@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="lavomaticDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'lavomaticDb.dbo.Dryer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Dryer">
+          <Key>
+            <PropertyRef Name="IdLaundry" />
+          </Key>
+          <Property Name="IdLaundry" Type="bigint" Nullable="false" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="Weight" Type="int" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Price" Type="numeric" Precision="4" Scale="2" />
+        </EntityType>
+        <EntityType Name="Laundry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Lat" Type="decimal" Precision="12" Scale="9" Nullable="false" />
+          <Property Name="Lon" Type="decimal" Precision="12" Scale="9" Nullable="false" />
+          <Property Name="OpenHours" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="HouseNum" Type="nvarchar" MaxLength="10" />
+          <Property Name="Street" Type="nvarchar" MaxLength="100" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+          <Property Name="City" Type="nvarchar" MaxLength="64" />
+          <Property Name="Web" Type="nvarchar" MaxLength="128" />
+          <Property Name="WheelChair" Type="bit" />
+        </EntityType>
+        <EntityType Name="LaundryExt">
+          <Key>
+            <PropertyRef Name="IdLaundry" />
+          </Key>
+          <Property Name="IdLaundry" Type="bigint" Nullable="false" />
+          <Property Name="Detergent" Type="bit" />
+          <Property Name="DetergentPrice" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="DetergentComment" Type="nvarchar" MaxLength="32" />
+          <Property Name="Softener" Type="bit" />
+          <Property Name="SoftenerPrice" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="Desk" Type="int" />
+          <Property Name="Seat" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'lavomaticDb.dbo.Washer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Washer">
+          <Key>
+            <PropertyRef Name="IdLaundry" />
+          </Key>
+          <Property Name="IdLaundry" Type="bigint" Nullable="false" />
+          <Property Name="Weight" Type="int" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Price" Type="numeric" Precision="4" Scale="2" />
+          <Property Name="PriceWithDisinfectant" Type="numeric" Precision="4" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Dryer_Laundry">
+          <End Role="Laundry" Type="Self.Laundry" Multiplicity="1" />
+          <End Role="Dryer" Type="Self.Dryer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Laundry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dryer">
+              <PropertyRef Name="IdLaundry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LaundryExt_Laundry">
+          <End Role="Laundry" Type="Self.Laundry" Multiplicity="1" />
+          <End Role="LaundryExt" Type="Self.LaundryExt" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Laundry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LaundryExt">
+              <PropertyRef Name="IdLaundry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Washer_Laundry">
+          <End Role="Laundry" Type="Self.Laundry" Multiplicity="1" />
+          <End Role="Washer" Type="Self.Washer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Laundry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Washer">
+              <PropertyRef Name="IdLaundry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lavomaticDbModelStoreContainer">
+          <EntitySet Name="Laundry" EntityType="Self.Laundry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LaundryExt" EntityType="Self.LaundryExt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dryer" EntityType="Self.Dryer" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Dryer].[IdLaundry] AS [IdLaundry], 
+    [Dryer].[Duration] AS [Duration], 
+    [Dryer].[Weight] AS [Weight], 
+    [Dryer].[Number] AS [Number], 
+    [Dryer].[Price] AS [Price]
+    FROM [dbo].[Dryer] AS [Dryer]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Washer" EntityType="Self.Washer" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Washer].[IdLaundry] AS [IdLaundry], 
+    [Washer].[Weight] AS [Weight], 
+    [Washer].[Number] AS [Number], 
+    [Washer].[Price] AS [Price], 
+    [Washer].[PriceWithDisinfectant] AS [PriceWithDisinfectant]
+    FROM [dbo].[Washer] AS [Washer]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Dryer_Laundry" Association="Self.FK_Dryer_Laundry">
+            <End Role="Laundry" EntitySet="Laundry" />
+            <End Role="Dryer" EntitySet="Dryer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LaundryExt_Laundry" Association="Self.FK_LaundryExt_Laundry">
+            <End Role="Laundry" EntitySet="Laundry" />
+            <End Role="LaundryExt" EntitySet="LaundryExt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Washer_Laundry" Association="Self.FK_Washer_Laundry">
+            <End Role="Laundry" EntitySet="Laundry" />
+            <End Role="Washer" EntitySet="Washer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="lavomaticDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Laundry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Lat" Type="Decimal" Precision="12" Scale="9" Nullable="false" />
+          <Property Name="Lon" Type="Decimal" Precision="12" Scale="9" Nullable="false" />
+          <Property Name="OpenHours" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HouseNum" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Web" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="WheelChair" Type="Boolean" />
+          <NavigationProperty Name="Dryer" Relationship="Self.FK_Dryer_Laundry" FromRole="Laundry" ToRole="Dryer" />
+          <NavigationProperty Name="LaundryExt" Relationship="Self.FK_LaundryExt_Laundry" FromRole="Laundry" ToRole="LaundryExt" />
+          <NavigationProperty Name="Washer" Relationship="Self.FK_Washer_Laundry" FromRole="Laundry" ToRole="Washer" />
+        </EntityType>
+        <EntityType Name="LaundryExt">
+          <Key>
+            <PropertyRef Name="IdLaundry" />
+          </Key>
+          <Property Name="IdLaundry" Type="Int64" Nullable="false" />
+          <Property Name="Detergent" Type="Boolean" />
+          <Property Name="DetergentPrice" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="DetergentComment" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Softener" Type="Boolean" />
+          <Property Name="SoftenerPrice" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="Desk" Type="Int32" />
+          <Property Name="Seat" Type="Int32" />
+          <NavigationProperty Name="Laundry" Relationship="Self.FK_LaundryExt_Laundry" FromRole="LaundryExt" ToRole="Laundry" />
+        </EntityType>
+        <EntityType Name="Dryer">
+          <Key>
+            <PropertyRef Name="IdLaundry" />
+          </Key>
+          <Property Name="IdLaundry" Type="Int64" Nullable="false" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="Weight" Type="Int32" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="4" Scale="2" />
+          <NavigationProperty Name="Laundry" Relationship="Self.FK_Dryer_Laundry" FromRole="Dryer" ToRole="Laundry" />
+        </EntityType>
+        <EntityType Name="Washer">
+          <Key>
+            <PropertyRef Name="IdLaundry" />
+          </Key>
+          <Property Name="IdLaundry" Type="Int64" Nullable="false" />
+          <Property Name="Weight" Type="Int32" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="PriceWithDisinfectant" Type="Decimal" Precision="4" Scale="2" />
+          <NavigationProperty Name="Laundry" Relationship="Self.FK_Washer_Laundry" FromRole="Washer" ToRole="Laundry" />
+        </EntityType>
+        <Association Name="FK_Dryer_Laundry">
+          <End Role="Laundry" Type="Self.Laundry" Multiplicity="1" />
+          <End Role="Dryer" Type="Self.Dryer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Laundry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dryer">
+              <PropertyRef Name="IdLaundry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LaundryExt_Laundry">
+          <End Role="Laundry" Type="Self.Laundry" Multiplicity="1" />
+          <End Role="LaundryExt" Type="Self.LaundryExt" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Laundry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LaundryExt">
+              <PropertyRef Name="IdLaundry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Washer_Laundry">
+          <End Role="Laundry" Type="Self.Laundry" Multiplicity="1" />
+          <End Role="Washer" Type="Self.Washer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Laundry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Washer">
+              <PropertyRef Name="IdLaundry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lavomaticDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Laundries" EntityType="Self.Laundry" />
+          <EntitySet Name="LaundryExts" EntityType="Self.LaundryExt" />
+          <EntitySet Name="Dryers" EntityType="Self.Dryer" />
+          <EntitySet Name="Washers" EntityType="Self.Washer" />
+          <AssociationSet Name="FK_Dryer_Laundry" Association="Self.FK_Dryer_Laundry">
+            <End Role="Laundry" EntitySet="Laundries" />
+            <End Role="Dryer" EntitySet="Dryers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LaundryExt_Laundry" Association="Self.FK_LaundryExt_Laundry">
+            <End Role="Laundry" EntitySet="Laundries" />
+            <End Role="LaundryExt" EntitySet="LaundryExts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Washer_Laundry" Association="Self.FK_Washer_Laundry">
+            <End Role="Laundry" EntitySet="Laundries" />
+            <End Role="Washer" EntitySet="Washers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="lavomaticDbModelStoreContainer" CdmEntityContainer="lavomaticDbEntities">
+          <EntitySetMapping Name="Laundries">
+            <EntityTypeMapping TypeName="lavomaticDbModel.Laundry">
+              <MappingFragment StoreEntitySet="Laundry">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="OpenHours" ColumnName="OpenHours" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="HouseNum" ColumnName="HouseNum" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Web" ColumnName="Web" />
+                <ScalarProperty Name="WheelChair" ColumnName="WheelChair" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LaundryExts">
+            <EntityTypeMapping TypeName="lavomaticDbModel.LaundryExt">
+              <MappingFragment StoreEntitySet="LaundryExt">
+                <ScalarProperty Name="IdLaundry" ColumnName="IdLaundry" />
+                <ScalarProperty Name="Detergent" ColumnName="Detergent" />
+                <ScalarProperty Name="DetergentPrice" ColumnName="DetergentPrice" />
+                <ScalarProperty Name="DetergentComment" ColumnName="DetergentComment" />
+                <ScalarProperty Name="Softener" ColumnName="Softener" />
+                <ScalarProperty Name="SoftenerPrice" ColumnName="SoftenerPrice" />
+                <ScalarProperty Name="Desk" ColumnName="Desk" />
+                <ScalarProperty Name="Seat" ColumnName="Seat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dryers">
+            <EntityTypeMapping TypeName="lavomaticDbModel.Dryer">
+              <MappingFragment StoreEntitySet="Dryer">
+                <ScalarProperty Name="IdLaundry" ColumnName="IdLaundry" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Washers">
+            <EntityTypeMapping TypeName="lavomaticDbModel.Washer">
+              <MappingFragment StoreEntitySet="Washer">
+                <ScalarProperty Name="IdLaundry" ColumnName="IdLaundry" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PriceWithDisinfectant" ColumnName="PriceWithDisinfectant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

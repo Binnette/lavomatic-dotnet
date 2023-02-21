@@ -1,0 +1,124 @@
+/* General */
+html, body, #container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    /*font-size: 98%;*/
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+    padding-top: 15px
+}
+
+p {
+    margin: 0;
+    margin-bottom: 10px
+}
+
+ol, ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+a {
+    color: #014c8c;
+}
+
+/* Sidebar */
+
+#sidebar {
+    display: block;
+    width: 310px;
+    height: 100%;
+    max-width: 100%;
+    float: left;
+    /*/background-color: #CAD5B6;*/
+    position: relative;
+}
+
+#welcome {
+    padding: 0 10px;
+}
+
+.brand {
+    padding: 1px 10px;
+    font-family: Fantasy;
+    font-size: 27px;
+    line-height: 27px;
+    /*background-color: #add19e;*/
+    border-bottom: 1px solid #999999;
+    /*margin-bottom: 10px;*/
+}
+
+.brand a {
+    color: #101010;
+    text-decoration: none;
+}
+
+.about {
+    position: absolute;
+    top: 3px;
+    right: 10px;
+}
+
+#work-wrapper {
+    padding: 0;
+}
+
+.laundry {
+    font-family: Serif;
+    font-size: 22px;
+    background-color: #5cb85c;
+    padding: 10px;
+    color: #fff;
+}
+
+.info-line {
+    padding: 4px 10px;
+}
+
+.info-line i {
+    vertical-align: middle;
+    font-size: 1.6em;
+    color: #5cb85c;
+    min-width: 26px;
+}
+
+/* map */
+
+#map {
+    width: auto;
+    height: 100%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Extra small devices (portrait phones, less than 544px)
+   No media query since this is the default in Bootstrap*/
+
+/* Small devices (landscape phones, 544px and up)*/
+@media (min-width: 544px) { }
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) { }
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) { }
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) { }
+
+
+/* about.html */
+#about-container {
+    background-color: #CAD5B6;
+    padding: 0 15px;
+    height: 100%;
+}
+
+.faqTitle {
+    font-weight: bold;
+    font-size: small;
+    margin-top: 5px;
+}
